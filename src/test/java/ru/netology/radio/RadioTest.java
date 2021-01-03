@@ -5,12 +5,35 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 class RadioTest {
+    int quantityStation = 15;
+    Radio myCustomizeRadio = new Radio(quantityStation);
     Radio myRadio = new Radio();
+
+    @Test
+    void shouldSetQuantityStation() {
+        assertEquals(quantityStation, myCustomizeRadio.getQuantityStation());
+        assertEquals(0, myCustomizeRadio.getCurrentStation());
+        assertEquals(0, myCustomizeRadio.getVolume());
+    }
+
+    @Test
+    void shouldSetDefaultSets() {
+        assertEquals(10, myRadio.getQuantityStation());
+        assertEquals(0, myRadio.getCurrentStation());
+        assertEquals(0, myRadio.getVolume());
+    }
+
+    @Test
+    void shouldCheckOverLimitCustomizeStation() {
+        myCustomizeRadio.setCurrentStation(quantityStation - 1);
+        myCustomizeRadio.upCurrentStation();
+        assertEquals(0, myCustomizeRadio.getCurrentStation());
+    }
 
     @Test
     void shouldSetCurrentStation() {
         myRadio.setCurrentStation(5);
-        int setStation = myRadio.currentStation;
+        int setStation = myRadio.getCurrentStation();
         System.out.println("Номер станции:" + setStation);
         assertEquals(5, setStation);
     }
@@ -18,7 +41,7 @@ class RadioTest {
     @Test
     void shouldCheckOverLimit() {
         myRadio.setCurrentStation(10);
-        int setStation = myRadio.currentStation;
+        int setStation = myRadio.getCurrentStation();
         System.out.println("Номер станции:" + setStation);
         assertEquals(0, setStation);
     }
@@ -26,7 +49,7 @@ class RadioTest {
     @Test
     void shouldCheckUnderLimit() {
         myRadio.setCurrentStation(-1);
-        int setStation = myRadio.currentStation;
+        int setStation = myRadio.getCurrentStation();
         System.out.println("Номер станции:" + setStation);
         assertEquals(0, setStation);
     }
@@ -36,7 +59,7 @@ class RadioTest {
         myRadio.setCurrentStation(5);
         int currentStation;
         myRadio.upCurrentStation();
-        currentStation = myRadio.currentStation;
+        currentStation = myRadio.getCurrentStation();
         System.out.println("Номер станции:" + currentStation);
         assertEquals(6, currentStation);
     }
@@ -46,7 +69,7 @@ class RadioTest {
         myRadio.setCurrentStation(9);
         int currentStation;
         myRadio.upCurrentStation();
-        currentStation = myRadio.currentStation;
+        currentStation = myRadio.getCurrentStation();
         System.out.println("Номер станции:" + currentStation);
         assertEquals(0, currentStation);
     }
@@ -56,7 +79,7 @@ class RadioTest {
         myRadio.setCurrentStation(5);
         int currentStation;
         myRadio.downCurrentStation();
-        currentStation = myRadio.currentStation;
+        currentStation = myRadio.getCurrentStation();
         System.out.println("Номер станции:" + currentStation);
         assertEquals(4, currentStation);
     }
@@ -66,47 +89,47 @@ class RadioTest {
         myRadio.setCurrentStation(0);
         int currentStation;
         myRadio.downCurrentStation();
-        currentStation = myRadio.currentStation;
+        currentStation = myRadio.getCurrentStation();
         System.out.println("Номер станции:" + currentStation);
         assertEquals(9, currentStation);
     }
 
     @Test
     void shouldUpVolume() {
-        myRadio.volume = 5;
+        myRadio.setVolume(5);
         int volume;
         myRadio.upVolume();
-        volume = myRadio.volume;
+        volume = myRadio.getVolume();
         System.out.println("Громкость:" + volume);
         assertEquals(6, volume);
     }
 
     @Test
-    void shouldHoldVolumeAtTen() {
-        myRadio.volume = 10;
+    void shouldHoldVolumeAtHundred() {
+        myRadio.setVolume(100);
         int volume;
         myRadio.upVolume();
-        volume = myRadio.volume;
+        volume = myRadio.getVolume();
         System.out.println("Громкость:" + volume);
-        assertEquals(10, volume);
+        assertEquals(100, volume);
     }
 
     @Test
     void shouldDownVolume() {
-        myRadio.volume = 10;
+        myRadio.setVolume(10);
         int volume;
         myRadio.downVolume();
-        volume = myRadio.volume;
+        volume = myRadio.getVolume();
         System.out.println("Громкость:" + volume);
         assertEquals(9, volume);
     }
 
     @Test
     void shouldHoldVolumeAtZero() {
-        myRadio.volume = 0;
+        myRadio.setVolume(0);
         int volume;
         myRadio.downVolume();
-        volume = myRadio.volume;
+        volume = myRadio.getVolume();
         System.out.println("Громкость:" + volume);
         assertEquals(0, volume);
     }
